@@ -1,0 +1,31 @@
+task assembleExternalJar << {
+    // Get the location of the Android SDK
+    ext.androidSdkDir = System.env.ANDROID_HOME
+    if (androidSdkDir == null) {
+        Properties localProps = new Properties()
+        localProps.load(new FileInputStream(file('../local.properties')))
+        ext.androidSdkDir = localProps['sdk.dir']
+    }
+    // Make sure no existing jar file exists as this will cause dx to fail
+    new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.jar").delete();
+    // Use command line dx utility to convert *.class files into classes.dex inside jar archive
+    String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
+    exec {
+        commandLine "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}",
+                '--dex',
+                "--output=${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar",
+                "${buildDir}/intermediates/classes/release/",
+                "${CIPHER_LIBRARY}"
+    }
+    //    copyJarToOutputs.execute()
+    exec {
+        commandLine "java",
+        "-cp",
+        "../${START_MODULE}/build/intermediates/exploded-aar/jp.cane.android/googleplay-cipher/1.0.0/jars/classes.jar",
+        "jp.cane.android.googleplaycipher.CipherUtil",
+        "'${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar'",
+        "`base64 passwd`",
+        ">",
+        "../${START_MODULE}/src/main/assets/a.out"
+    }
+}

@@ -29,3 +29,7 @@ task assembleExternalJar << {
         "../${START_MODULE}/src/main/assets/a.out"
     }
 }
+
+// Set the dependencies of the build tasks so that assembleExternalJar does a complete build
+copyClasses.dependsOn(assemble)
+assembleExternalJar.dependsOn(copyClasses)

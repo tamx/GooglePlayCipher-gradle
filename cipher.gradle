@@ -30,6 +30,25 @@ task assembleExternalJar << {
     }
 }
 
+// Define some tasks which are used in the build process
+task copyClasses(type: Copy) {
+    // Copy the assembled *.class files for only the current namespace into a new directory
+    // get directory for current namespace (PLUGIN_NAMESPACE = 'com.example.toastlib')
+    def namespacePath = PLUGIN_NAMESPACE.replaceAll("\\.", "/")
+    // set source and destination directories
+    from "build/intermediates/classes/release/${namespacePath}/"
+    into "build/intermediates/dex/${namespacePath}/"
+
+    // exclude classes which don't have a corresponding .java entry in the source directory
+    def remExt = { name -> name.lastIndexOf('.').with { it != -1 ? name[0..<it] : name } }
+    eachFile { details ->
+        def thisFile = new File("${projectDir}/src/main/java/${namespacePath}/", remExt(details.name) + ".java")
+        if (!(thisFile.exists())) {
+            details.exclude()
+        }
+    }
+}
+
 // Set the dependencies of the build tasks so that assembleExternalJar does a complete build
 copyClasses.dependsOn(assemble)
 assembleExternalJar.dependsOn(copyClasses)

@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 task assembleExternalJar << {
     // Get the location of the Android SDK
     ext.androidSdkDir = System.env.ANDROID_HOME
@@ -18,18 +20,18 @@ task assembleExternalJar << {
                 "${CIPHER_LIBRARY}"
     }
     //    copyJarToOutputs.execute()
+    def passwd = "base64 passwd".execute().text
     exec {
         commandLine "java",
         "-cp",
         "../${START_MODULE}/build/intermediates/exploded-aar/jp.cane.android/googleplay-cipher/1.0.0/jars/classes.jar",
         "jp.cane.android.googleplaycipher.CipherUtil",
-        "'${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar'",
-        "`base64 passwd`",
-        ">",
+        "${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar",
+        "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out"
     }
 }
-
+ 
 // Define some tasks which are used in the build process
 task copyClasses(type: Copy) {
     // Copy the assembled *.class files for only the current namespace into a new directory
@@ -38,7 +40,7 @@ task copyClasses(type: Copy) {
     // set source and destination directories
     from "build/intermediates/classes/release/${namespacePath}/"
     into "build/intermediates/dex/${namespacePath}/"
-
+ 
     // exclude classes which don't have a corresponding .java entry in the source directory
     def remExt = { name -> name.lastIndexOf('.').with { it != -1 ? name[0..<it] : name } }
     eachFile { details ->
@@ -48,7 +50,7 @@ task copyClasses(type: Copy) {
         }
     }
 }
-
+ 
 // Set the dependencies of the build tasks so that assembleExternalJar does a complete build
 copyClasses.dependsOn(assemble)
 assembleExternalJar.dependsOn(copyClasses)

@@ -8,6 +8,11 @@ task assembleExternalJar << {
         localProps.load(new FileInputStream(file('../local.properties')))
         ext.androidSdkDir = localProps['sdk.dir']
     }
+    exec {
+	commandLine "rm",
+		"-rf",
+		"${buildDir}/intermediates/classes/release/com/android/vending/billing"
+    }
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.jar").delete();
     // Use command line dx utility to convert *.class files into classes.dex inside jar archive
@@ -21,6 +26,7 @@ task assembleExternalJar << {
     }
     //    copyJarToOutputs.execute()
     def passwd = "base64 passwd".execute().text
+    println "Base64: ${passwd}"
     exec {
         commandLine "java",
         "-cp",

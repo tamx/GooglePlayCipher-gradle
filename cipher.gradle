@@ -14,15 +14,21 @@ task assembleExternalJar << {
 		"${buildDir}/intermediates/classes/release/com/android/vending/billing"
     }
     // Make sure no existing jar file exists as this will cause dx to fail
-    new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.jar").delete();
+    new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.dex").delete();
     // Use command line dx utility to convert *.class files into classes.dex inside jar archive
     String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
+    def params = []
+    params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}"
+    params << "--dex"
+    params << "--output=${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.dex"
+    params << "${buildDir}/intermediates/classes/release/"
+    "${CIPHER_LIBRARY}".split(",").each {
+        def library ->
+            params << library
+    }
+    println params
     exec {
-        commandLine "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}",
-                '--dex',
-                "--output=${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar",
-                "${buildDir}/intermediates/classes/release/",
-                "${CIPHER_LIBRARY}"
+        commandLine params
     }
     //    copyJarToOutputs.execute()
     def passwd = "base64 passwd".execute().text
@@ -30,9 +36,9 @@ task assembleExternalJar << {
     exec {
         commandLine "java",
         "-cp",
-        "../${START_MODULE}/build/intermediates/exploded-aar/jp.cane.android/googleplay-cipher/1.0.0/jars/classes.jar",
+        "/home/tam/bin/CipherUtil.jar",
         "jp.cane.android.googleplaycipher.CipherUtil",
-        "${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.jar",
+        "${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.dex",
         "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out"
     }

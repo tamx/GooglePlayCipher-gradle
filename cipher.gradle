@@ -20,8 +20,8 @@ task assembleExternalJar << {
     def params = []
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}"
     params << "--dex"
-    params << "--output=${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.dex"
-    params << "${buildDir}/intermediates/classes/release/"
+    params << "--output=${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
+    params << "${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/"
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->
             params << library
@@ -38,7 +38,7 @@ task assembleExternalJar << {
         "-cp",
         "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/classes/release/",
         "jp.cane.android.googleplaycipher.CipherUtil",
-        "${buildDir}/intermediates/classes/${PLUGIN_NAMESPACE}.dex",
+        "${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex",
         "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out"
     }

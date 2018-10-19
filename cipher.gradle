@@ -36,7 +36,7 @@ task assembleExternalJar << {
     exec {
         commandLine "java",
         "-cp",
-        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/classes/release/",
+        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
         "jp.cane.android.googleplaycipher.CipherUtil",
         "${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex",
         "${passwd}",

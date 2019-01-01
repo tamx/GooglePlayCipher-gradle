@@ -11,7 +11,7 @@ task assembleExternalJar << {
     exec {
 	commandLine "rm",
 		"-rf",
-		"${buildDir}/intermediates/javac/release/com/android/vending/billing"
+		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/com/android/vending/billing"
     }
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.dex").delete();

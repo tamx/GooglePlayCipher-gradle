@@ -1,6 +1,6 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
-task assembleExternalJar << {
+task assembleExternalJar {
     // Get the location of the Android SDK
     ext.androidSdkDir = System.env.ANDROID_HOME
     if (androidSdkDir == null) {

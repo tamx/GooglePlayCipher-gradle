@@ -11,7 +11,7 @@ task assembleExternalJar {
     exec {
 	commandLine "rm",
 		"-rf",
-		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing"
+		"${buildDir}/intermediates/javac/release/classes/com/android/vending/billing"
     }
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/${PLUGIN_NAMESPACE}.dex").delete();
@@ -21,7 +21,7 @@ task assembleExternalJar {
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}"
     params << "--dex"
     params << "--output=${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
-    params << "${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/"
+    params << "${buildDir}/intermediates/javac/release/classes/"
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->
             params << library
@@ -36,7 +36,7 @@ task assembleExternalJar {
     exec {
         commandLine "java",
         "-cp",
-        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/classes/",
         "jp.cane.android.googleplaycipher.CipherUtil",
         "${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex",
         "${passwd}",

@@ -31,7 +31,7 @@ task assembleExternalJar {
         commandLine params
     }
     //    copyJarToOutputs.execute()
-    def passwd = "base64 passwd".execute().text
+    def passwd = "base64 ${buildDir}/../passwd".execute().text
     println "Base64: ${passwd}"
     exec {
         commandLine "java",

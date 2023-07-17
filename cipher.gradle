@@ -24,10 +24,16 @@ task assembleExternalJar {
     params << "${androidSdkDir}/platforms/android-33/android.jar"
     params << "--output"
     params << "${buildDir}/intermediates/${PLUGIN_NAMESPACE}/dex/"
-    params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
+    // params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
+	fileTree(dir: "${buildDir}/intermediates/javac/release/classes/", include: "**/*.class").visit { details ->
+		params << details.file
+	}
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->
-            params << library
+            // params << library
+		fileTree(dir: "${library}", include: "**/*.class").visit { details ->
+			params << details.file
+		}
     }
     println params
     exec {

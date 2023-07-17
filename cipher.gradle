@@ -20,8 +20,9 @@ task assembleExternalJar {
     def params = []
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
     params << "--release"
+    params << "--lib ${androidSdkDir}/platforms/android-33/android.jar"
     params << "--output ${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
-    params << "${buildDir}/intermediates/javac/release/classes/"
+    params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->
             params << library

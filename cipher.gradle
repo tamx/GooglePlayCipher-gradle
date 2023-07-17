@@ -14,7 +14,8 @@ task assembleExternalJar {
 		"${buildDir}/intermediates/javac/release/classes/com/android/vending/billing"
     }
     // Make sure no existing jar file exists as this will cause dx to fail
-    new File("${buildDir}/intermediates/dex/classes.dex").delete();
+    new File("${buildDir}/intermediates/dex/").delete();
+    new File("${buildDir}/intermediates/dex/").mkdir();
     // Use command line dx utility to convert *.class files into classes.dex inside jar archive
     String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
     def params = []

@@ -19,11 +19,12 @@ task assembleExternalJar {
     String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
     def params = []
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
-    params << "--release"
     params << "--lib"
     params << "${androidSdkDir}/platforms/android-33/android.jar"
     params << "--output"
     params << "${buildDir}/intermediates/${PLUGIN_NAMESPACE}/dex/"
+    params << "--release"
+    params << "--intermediate"
     // params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
 	fileTree(dir: "${buildDir}/intermediates/javac/release/classes/", include: "**/*.class").visit { details ->
 		params << details.file

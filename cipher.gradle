@@ -23,7 +23,7 @@ task assembleExternalJar {
     params << "--lib"
     params << "${androidSdkDir}/platforms/android-33/android.jar"
     params << "--output"
-    params << "${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
+    params << "${buildDir}/intermediates/${PLUGIN_NAMESPACE}/dex/"
     params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->

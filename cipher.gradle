@@ -53,7 +53,7 @@ task assembleExternalJar {
         "-cp",
         "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/classes/",
         "jp.cane.android.googleplaycipher.CipherUtil",
-        "${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex",
+        "${buildDir}/intermediates/dex/classes.dex",
         "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out"
     }

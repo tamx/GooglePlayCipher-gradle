@@ -19,8 +19,8 @@ task assembleExternalJar {
     String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
     def params = []
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
-    params << "--dex"
-    params << "--output=${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
+    params << "--release"
+    params << "--output ${buildDir}/intermediates/${PLUGIN_NAMESPACE}.dex"
     params << "${buildDir}/intermediates/javac/release/classes/"
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->

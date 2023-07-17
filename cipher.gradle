@@ -27,13 +27,17 @@ task assembleExternalJar {
     params << "--intermediate"
     // params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
 	fileTree(dir: "${buildDir}/intermediates/javac/release/classes/", include: "**/*.class").visit { details ->
-		params << details.file
+		if (details.name.endsWith(".class")) {
+			params << details.file
+		}
 	}
     "${CIPHER_LIBRARY}".split(",").each {
         def library ->
             // params << library
 		fileTree(dir: "${library}", include: "**/*.class").visit { details ->
-			params << details.file
+			if (details.name.endsWith(".class")) {
+				params << details.file
+			}
 		}
     }
     println params

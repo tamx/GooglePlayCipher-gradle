@@ -48,7 +48,7 @@ task assembleExternalJar {
     //    copyJarToOutputs.execute()
 	exec {
         commandLine "mkdir",
-        "-f",
+        "-p",
         "../${START_MODULE}/src/main/assets/"
 	}
     def passwd = "base64 ${buildDir}/../passwd".execute().text

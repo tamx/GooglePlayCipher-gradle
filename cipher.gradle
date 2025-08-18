@@ -26,6 +26,12 @@ task assembleExternalJar {
     params << "${buildDir}/intermediates/dex/"
     params << "--release"
     params << "--intermediate"
+    // params << "${buildDir}/tmp/kotlin-classes/release/*/*.class"
+	fileTree(dir: "${buildDir}/tmp/kotlin-classes/release/", include: "**/*.class").visit { details ->
+		if (details.name.endsWith(".class")) {
+			params << details.file
+		}
+	}
     // params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
 	fileTree(dir: "${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/", include: "**/*.class").visit { details ->
 		if (details.name.endsWith(".class")) {

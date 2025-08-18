@@ -27,7 +27,7 @@ task assembleExternalJar {
     params << "--release"
     params << "--intermediate"
     // params << "${buildDir}/intermediates/javac/release/classes/*/*.class"
-	fileTree(dir: "${buildDir}/intermediates/javac/release/classes/", include: "**/*.class").visit { details ->
+	fileTree(dir: "${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/", include: "**/*.class").visit { details ->
 		if (details.name.endsWith(".class")) {
 			params << details.file
 		}

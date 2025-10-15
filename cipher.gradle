@@ -21,7 +21,7 @@ task assembleExternalJar {
     def params = []
     params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
     params << "--lib"
-    params << "${androidSdkDir}/platforms/android-33/android.jar"
+    params << "${androidSdkDir}/platforms/android-36/android.jar"
     params << "--output"
     params << "${buildDir}/intermediates/dex/"
     params << "--release"

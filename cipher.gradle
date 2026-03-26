@@ -8,11 +8,11 @@ task assembleExternalJar {
         localProps.load(new FileInputStream(file('../local.properties')))
         ext.androidSdkDir = localProps['sdk.dir']
     }
-    doFirst {
+    doFirst {	injected.execOps.exec {
 	commandLine("rm",
 		"-rf",
 		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing")
-    }
+    }}
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/").delete();
     new File("${buildDir}/intermediates/dex/").mkdir();
@@ -48,18 +48,18 @@ task assembleExternalJar {
 		}
     }
     println params
-    doLast {
+    doLast {	injected.execOps.exec {
         commandLine(params)
-    }
+    }}
     //    copyJarToOutputs.execute()
-	doLast {
+	doLast {	injected.execOps.exec {
         commandLine("mkdir",
         "-p",
         "../${START_MODULE}/src/main/assets/")
-	}
+	}}
     def passwd = "base64 ${buildDir}/../passwd".execute().text
     println "Base64: ${passwd}"
-    doLast {
+    doLast {	injected.execOps.exec {
         commandLine("java",
         "-cp",
         "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
@@ -67,7 +67,7 @@ task assembleExternalJar {
         "${buildDir}/intermediates/dex/classes.dex",
         "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out")
-    }
+    }}
 }
  
 // Define some tasks which are used in the build process

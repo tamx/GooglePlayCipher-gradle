@@ -46,6 +46,7 @@ task assembleExternalJar {
 	def output1 = "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt} '" + params.join("' '") + "'"
 	println(output1)
 	println(output1.execute().text)
+	commandLine output1
 	//    copyJarToOutputs.execute()
     println "mkdir -p ../${START_MODULE}/src/main/assets/"
     mkdir "../${START_MODULE}/src/main/assets/"
@@ -56,6 +57,7 @@ task assembleExternalJar {
         "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
 	println(output2.execute().text)
+	commandLine output2
 }
  
 // Define some tasks which are used in the build process

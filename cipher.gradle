@@ -50,7 +50,7 @@ task assembleExternalJar {
         .exec {
 			commandLine params
 		}
-        .standardOutput.asText.get().trim())
+        .standardOutput.asText.get())
 	//    copyJarToOutputs.execute()
     // println "mkdir -p ../${START_MODULE}/src/main/assets/"
     mkdir "../${START_MODULE}/src/main/assets/"

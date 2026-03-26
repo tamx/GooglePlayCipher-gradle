@@ -12,7 +12,7 @@ task assembleExternalJar {
 	commandLine("rm",
 		"-rf",
 		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing")
-    }
+    }.result.get()
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/").delete();
     new File("${buildDir}/intermediates/dex/").mkdir();
@@ -50,13 +50,13 @@ task assembleExternalJar {
     println params
     providers.exec {
         commandLine(params)
-    }
+    }.result.get()
     //    copyJarToOutputs.execute()
 	providers.exec {
         commandLine("mkdir",
         "-p",
         "../${START_MODULE}/src/main/assets/")
-	}
+	}.result.get()
     def passwd = "base64 ${buildDir}/../passwd".execute().text
     println "Base64: ${passwd}"
     providers.exec {
@@ -67,7 +67,7 @@ task assembleExternalJar {
         "${buildDir}/intermediates/dex/classes.dex",
         "${passwd}",
         "../${START_MODULE}/src/main/assets/a.out")
-    }
+    }.result.get()
 }
  
 // Define some tasks which are used in the build process

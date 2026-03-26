@@ -68,7 +68,7 @@ task assembleExternalJar {
 		        "jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex",
         		"${passwd}", "../${START_MODULE}/src/main/assets/a.out"
 		}
-        .standardOutput.asText.get())
+        .standardOutput.asText.get().trim())
 }
  
 // Define some tasks which are used in the build process

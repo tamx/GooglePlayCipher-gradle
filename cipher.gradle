@@ -9,11 +9,7 @@ task assembleExternalJar {
         ext.androidSdkDir = localProps['sdk.dir']
     }
 	println "rm -rf ${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing"
-    doFirst {	exec {
-	commandLine("rm",
-		"-rf",
-		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing")
-    }	}
+	delete "${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing"
     // Make sure no existing jar file exists as this will cause dx to fail
     new File("${buildDir}/intermediates/dex/").delete();
     new File("${buildDir}/intermediates/dex/").mkdir();
@@ -49,30 +45,32 @@ task assembleExternalJar {
 		}
     }
     println params.join("' '")
-    doLast {	exec {
-        commandLine(params)
-    }	}
-    //    copyJarToOutputs.execute()
+    // doLast {	exec {
+    //     commandLine(params)
+    // }	}
+	def output1 = ("'" + params.join("' '") + "'").execute().text
+	println(output1)
+	//    copyJarToOutputs.execute()
     println "mkdir -p ../${START_MODULE}/src/main/assets/"
-	doLast {	exec {
-        commandLine("mkdir",
-        "-p",
-        "../${START_MODULE}/src/main/assets/")
-	}	}
+    mkdir "../${START_MODULE}/src/main/assets/"
     def passwd = "base64 ${buildDir}/../passwd".execute().text
     println "Base64: ${passwd}"
     println "java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/"
     println    "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex"
     println    "${passwd} ../${START_MODULE}/src/main/assets/a.out"
-    doLast {	exec {
-        commandLine("java",
-        "-cp",
-        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
-        "jp.cane.android.googleplaycipher.CipherUtil",
-        "${buildDir}/intermediates/dex/classes.dex",
-        "${passwd}",
-        "../${START_MODULE}/src/main/assets/a.out")
-    }	}
+    // doLast {	exec {
+    //     commandLine("java",
+    //     "-cp",
+    //     "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+    //     "jp.cane.android.googleplaycipher.CipherUtil",
+    //     "${buildDir}/intermediates/dex/classes.dex",
+    //     "${passwd}",
+    //     "../${START_MODULE}/src/main/assets/a.out")
+    // }	}
+    def output2 = ("java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/" +
+        "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex" +
+        "${passwd} ../${START_MODULE}/src/main/assets/a.out").execute().text
+	println(output2)
 }
  
 // Define some tasks which are used in the build process

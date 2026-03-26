@@ -48,7 +48,7 @@ task assembleExternalJar {
     // doLast {	exec {
     //     commandLine(params)
     // }	}
-	def output1 = ("${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}" + "'" + params.join("' '") + "'").execute().text
+	def output1 = ("${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}" + " '" + params.join("' '") + "'").execute().text
 	println(output1)
 	//    copyJarToOutputs.execute()
     println "mkdir -p ../${START_MODULE}/src/main/assets/"

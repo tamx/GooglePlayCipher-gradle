@@ -48,8 +48,9 @@ task assembleExternalJar {
     // doLast {	exec {
     //     commandLine(params)
     // }	}
-	def output1 = ("${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}" + " '" + params.join("' '") + "'").execute().text
+	def output1 = "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt} '" + params.join("' '") + "'"
 	println(output1)
+	println(output1.execute().text)
 	//    copyJarToOutputs.execute()
     println "mkdir -p ../${START_MODULE}/src/main/assets/"
     mkdir "../${START_MODULE}/src/main/assets/"
@@ -67,10 +68,11 @@ task assembleExternalJar {
     //     "${passwd}",
     //     "../${START_MODULE}/src/main/assets/a.out")
     // }	}
-    def output2 = ("java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/" +
-        "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex" +
-        "${passwd} ../${START_MODULE}/src/main/assets/a.out").execute().text
+    def output2 = "java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/ " +
+        "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex " +
+        "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
+	println(output2.execute().text)
 }
  
 // Define some tasks which are used in the build process

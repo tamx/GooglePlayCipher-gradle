@@ -63,8 +63,8 @@ task assembleExternalJar {
 	// println(output2.execute().text)
 	println(providers
         .exec {
-			commandLine "/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
-				"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out"
+			commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+				"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
 		}
         .standardOutput.asText.get())
 }

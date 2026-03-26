@@ -48,7 +48,7 @@ task assembleExternalJar {
     // doLast {	exec {
     //     commandLine(params)
     // }	}
-	def output1 = "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt} '" + params.join("' '") + "'"
+	def output1 = "echo ${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt} '" + params.join("' '") + "'"
 	println(output1)
 	println(output1.execute().text)
 	//    copyJarToOutputs.execute()

@@ -48,7 +48,7 @@ task assembleExternalJar {
 			}
 		}
     }
-    println params.join(' ')
+    println params.join("' '")
     doLast {	exec {
         commandLine(params)
     }	}

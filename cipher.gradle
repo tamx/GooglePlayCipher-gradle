@@ -8,6 +8,9 @@ task assembleExternalJar {
         localProps.load(new FileInputStream(file('../local.properties')))
         ext.androidSdkDir = localProps['sdk.dir']
     }
+	println("rm",
+		"-rf",
+		"${buildDir}/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/android/vending/billing")
     doFirst {	exec {
 	commandLine("rm",
 		"-rf",
@@ -47,11 +50,14 @@ task assembleExternalJar {
 			}
 		}
     }
-    println params
+    println params.join(' ')
     doLast {	exec {
         commandLine(params)
     }	}
     //    copyJarToOutputs.execute()
+    println("mkdir",
+        "-p",
+        "../${START_MODULE}/src/main/assets/")
 	doLast {	exec {
         commandLine("mkdir",
         "-p",
@@ -59,6 +65,13 @@ task assembleExternalJar {
 	}	}
     def passwd = "base64 ${buildDir}/../passwd".execute().text
     println "Base64: ${passwd}"
+    println("java",
+        "-cp",
+        "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+        "jp.cane.android.googleplaycipher.CipherUtil",
+        "${buildDir}/intermediates/dex/classes.dex",
+        "${passwd}",
+        "../${START_MODULE}/src/main/assets/a.out")
     doLast {	exec {
         commandLine("java",
         "-cp",

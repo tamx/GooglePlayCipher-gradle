@@ -61,7 +61,14 @@ task assembleExternalJar {
         "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
 	println(output2.execute().text)
-	commandLine output2
+	println(providers
+        .exec {
+			commandLine "java", "-cp",
+				"../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+		        "jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex",
+        		"${passwd}", "../${START_MODULE}/src/main/assets/a.out"
+		}
+        .standardOutput.asText)
 }
  
 // Define some tasks which are used in the build process

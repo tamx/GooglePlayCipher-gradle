@@ -65,10 +65,10 @@ task assembleExternalJar {
         .exec {
 			commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
 				"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
-			errorOutput = System.err
+			// errorOutput = System.err
 			ignoreExitValue = true
 		}
-        .standardOutput.asText.get())
+        .errorOutput.asText.get())
 }
  
 // Define some tasks which are used in the build process

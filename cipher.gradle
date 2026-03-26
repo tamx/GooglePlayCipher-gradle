@@ -15,7 +15,7 @@ task assembleExternalJar {
     // Use command line dx utility to convert *.class files into classes.dex inside jar archive
     String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
     def params = []
-    // params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
+    params << "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}"
     params << "--lib"
     params << "${androidSdkDir}/platforms/android-36.1/android.jar"
     params << "--output"
@@ -48,7 +48,7 @@ task assembleExternalJar {
 	// println(output1.execute().text)
 	println(providers
         .exec {
-			commandLine "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt}", params
+			commandLine params
 		}
         .standardOutput.asText)
 	//    copyJarToOutputs.execute()

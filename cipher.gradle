@@ -43,6 +43,7 @@ task assembleExternalJar {
 			}
 		}
     }
+	println(params.join("' '"))
 	def output1 = providers.exec {
 		// ignoreExitValue = true
 		commandLine params

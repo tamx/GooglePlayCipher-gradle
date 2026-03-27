@@ -58,11 +58,11 @@ task assembleExternalJar {
         "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex " +
         "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
-	injected.execOps.javaexec {
+	println(providers.javaexec {
 		classpath = files("../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
 		mainClass.set("jp.cane.android.googleplaycipher.CipherUtil")
 		args("${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
-	}
+	}.standardOutput.asText.get())
 	def result = providers
         .exec {
 			commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",

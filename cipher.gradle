@@ -80,7 +80,7 @@ task assembleExternalJar {
 			// }
 		}
 	println(result.standardOutput.asText.get())
-	println(result.errorOutput.asText.get())
+	// println(result.errorOutput.asText.get())
 }
  
 // Define some tasks which are used in the build process

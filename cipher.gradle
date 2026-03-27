@@ -59,7 +59,7 @@ task assembleExternalJar {
 	//  println(output2)
 	println("pwd".execute().text)
 	def output2 = providers.javaexec {
-		classpath = files("../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
+		classpath = files("${buildDir}/../../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
 		mainClass.set("jp.cane.android.googleplaycipher.CipherUtil")
 		ignoreExitValue = true
 		args("${buildDir}/intermediates/dex/classes.dex", "${passwd}", "./${START_MODULE}/src/main/assets/a.out")

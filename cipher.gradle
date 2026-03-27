@@ -53,10 +53,10 @@ task assembleExternalJar {
     mkdir "../${START_MODULE}/src/main/assets/"
     def passwd = "base64 ${buildDir}/../passwd".execute().text.trim()
     println "Base64: ${passwd}"
-    def output2 = "java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/ " +
-        "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex " +
-        "${passwd} ../${START_MODULE}/src/main/assets/a.out"
-	println(output2)
+ //    def output2 = "java -cp ../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/ " +
+ //        "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex " +
+ //        "${passwd} ../${START_MODULE}/src/main/assets/a.out"
+	// println(output2)
 	println("pwd".execute().text)
 	def output2 = providers.javaexec {
 		classpath = files("../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")

@@ -43,13 +43,12 @@ task assembleExternalJar {
 			}
 		}
     }
-	def output1 = "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/d8${cmdExt} '" + params.join("' '") + "'"
-	println(output1)
-	println(providers
-        .exec {
-			commandLine params
-		}
-        .standardOutput.asText.get().trim())
+	def output1 = providers.exec {
+		// ignoreExitValue = true
+		commandLine params
+	}
+	println(output1.standardOutput.asText.get())
+	println(output1.standardError.asText.get())
 	//    copyJarToOutputs.execute()
     mkdir "../${START_MODULE}/src/main/assets/"
     def passwd = "base64 ${buildDir}/../passwd".execute().text.trim()
@@ -59,14 +58,14 @@ task assembleExternalJar {
         "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
 	println("pwd".execute().text)
-	def result = providers.javaexec {
+	def output2 = providers.javaexec {
 		classpath = files("../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
 		mainClass.set("jp.cane.android.googleplaycipher.CipherUtil")
-		ignoreExitValue = true
+		// ignoreExitValue = true
 		args("${buildDir}/intermediates/dex/classes.dex", "${passwd}", "./${START_MODULE}/src/main/assets/a.out")
 	}
-	println(result.standardOutput.asText.get())
-	println(result.standardError.asText.get())
+	println(output2.standardOutput.asText.get())
+	println(output2.standardError.asText.get())
 }
  
 // Define some tasks which are used in the build process

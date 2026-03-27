@@ -62,7 +62,7 @@ task assembleExternalJar {
 		classpath = files("../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
 		mainClass.set("jp.cane.android.googleplaycipher.CipherUtil")
 		args("${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
-	}.standardOutput.asText.get())
+	}.standardError.asText.get())
 	// def result = providers
  //        .exec {
 	// 		errorOutput = new ByteArrayOutputStream()

@@ -58,33 +58,34 @@ task assembleExternalJar {
         "jp.cane.android.googleplaycipher.CipherUtil ${buildDir}/intermediates/dex/classes.dex " +
         "${passwd} ../${START_MODULE}/src/main/assets/a.out"
 	println(output2)
+	println("pwd".execute().text)
 	println(providers.javaexec {
 		classpath = files("../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/")
 		mainClass.set("jp.cane.android.googleplaycipher.CipherUtil")
 		ignoreExitValue = true
 		args("${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
 	}.standardError.asText.get())
-	// def result = providers
- //        .exec {
-	// 		errorOutput = new ByteArrayOutputStream()
-	// 		commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
-	// 			"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
-	// 		// errorOutput = System.out
-	// 		ignoreExitValue = true
-	// 		doLast {
-	// 			println standardOutput.toString()
-	// 			println errorOutput.toString()
-	// 		}
-	// 		// errorOutput = new ByteArrayOutputStream()
-	// 		// def errorStream = new ByteArrayOutputStream()
-	// 		//    errorOutput = errorStream
-	// 		// doLast {
-	// 		// 	// Print the captured error output
-	// 		// 	println "Error output: $errorStream.toString()" 
-	// 		// }
-	// 	}
-	// println(result.standardOutput.asText.get())
-	// println(result.errorOutput.asText.get())
+	def result = providers
+        .exec {
+			// errorOutput = new ByteArrayOutputStream()
+			commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
+				"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
+			standardError = System.out
+			ignoreExitValue = true
+			// doLast {
+			// 	println standardOutput.toString()
+			// 	println errorOutput.toString()
+			// }
+			// errorOutput = new ByteArrayOutputStream()
+			// def errorStream = new ByteArrayOutputStream()
+			//    errorOutput = errorStream
+			// doLast {
+			// 	// Print the captured error output
+			// 	println "Error output: $errorStream.toString()" 
+			// }
+		}
+	println(result.standardOutput.asText.get())
+	println(result.standardError.asText.get())
 }
  
 // Define some tasks which are used in the build process

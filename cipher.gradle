@@ -63,18 +63,8 @@ task assembleExternalJar {
         .exec {
 			commandLine("/usr/bin/java", "-cp", "../../GooglePlayCipher/GooglePlayCipherLibrary/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/",
 				"jp.cane.android.googleplaycipher.CipherUtil", "${buildDir}/intermediates/dex/classes.dex", "${passwd}", "../${START_MODULE}/src/main/assets/a.out")
-			// errorOutput = System.out
+			errorOutput = out
 			ignoreExitValue = true
-			def errorStream = new ByteArrayOutputStream()
-		    errorOutput = errorStream
-
-			doLast {
-		        def errorMessages = errorStream.toString()
-		        if (!errorMessages.isEmpty()) {
-		            println "Captured error output: $errorMessages"
-		            // You could throw an exception here if needed to fail the build
-		        }
-		    }
 		}
         .standardOutput.asText.get())
 }

@@ -71,7 +71,7 @@ task assembleExternalJar {
 			// 	// Print the captured error output
 			// 	println "Error output: $errorStream.toString()" 
 			// }
-		.result
+		}.result
 	println(result.standardOutput.asText.get())
 	println(result.errorOutput.asText.get())
 }

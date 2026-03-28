@@ -22,8 +22,6 @@ task assembleExternalJar {
     params << "${buildDir}/intermediates/dex/"
     params << "--release"
     params << "--intermediate"
-	params << "--classpath"
-	params << "/home/tam/bin/android-studio/plugins/gradle/caches/9.4.1/transforms/f19bd418abed09921d5d618715710f98/transformed/billing-8.3.0/jars/classes.jar"
     // params << "${buildDir}/tmp/kotlin-classes/release/*/*.class"
 	fileTree(dir: "${buildDir}/intermediates/built_in_kotlinc/release/compileReleaseKotlin/classes/", include: "**/*.class").visit { details ->
 		if (details.name.endsWith(".class")) {
